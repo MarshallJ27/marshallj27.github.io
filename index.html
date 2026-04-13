@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Marshall</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Fragment+Mono&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #041414;
+    --ink: #faf8f0;
+    --ink-dim: rgba(250, 248, 240, 0.6);
+    --line: rgba(250, 248, 240, 0.12);
+    --teal: #18c4c3;
+    --orange: #f0783d;
+  }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 120px; }
+  header { border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 32px; }
+  #brand {
+    position: relative;
+    color: var(--teal);
+  }
+  .glyph {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font: 12px 'Fragment Mono', ui-monospace, monospace;
+    white-space: pre;
+    will-change: transform;
+  }
+  #info {
+    margin-top: 36px;
+    font: 13px/1.9 'Fragment Mono', 'Geist Mono', ui-monospace, monospace;
+    color: var(--ink);
+  }
+  #info .k { color: var(--ink-dim); display: inline-block; width: 88px; }
+  #info .v { color: var(--ink); }
+  #info .accent { color: var(--teal); }
+  #info a { color: var(--orange); text-decoration: none; border-bottom: 1px solid transparent; }
+  #info a:hover { border-bottom-color: var(--orange); }
+  #info .row { display: block; }
+
+  section { margin-top: 48px; }
+  section h2 {
+    font: 13px 'Fragment Mono', 'Geist Mono', monospace;
+    color: var(--ink-dim);
+    margin: 0 0 14px;
+    font-weight: 400;
+    cursor: pointer;
+    user-select: none;
+  }
+  section h2:hover { color: var(--teal); }
+  section h2 .caret {
+    display: inline-block;
+    width: 12px;
+    color: var(--ink-dim);
+    transition: transform 0.2s ease;
+  }
+  section.open h2 .caret { transform: rotate(90deg); color: var(--teal); }
+  section .body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.32s ease;
+  }
+  section.open .body { max-height: var(--section-h, 1000px); }
+  .log {
+    font: 13px/1.9 'Fragment Mono', 'Geist Mono', monospace;
+    color: var(--ink);
+  }
+  .log .entry { display: grid; grid-template-columns: 110px 1fr; gap: 16px; }
+  .log .when { color: var(--ink-dim); }
+  .log .what { color: var(--ink); }
+  .log .what .co { color: var(--teal); }
+  .log .note { color: var(--ink-dim); display: block; margin: 2px 0 6px; }
+  .log .entry {
+    cursor: pointer;
+    padding: 6px 0;
+    border-bottom: 1px solid transparent;
+  }
+  .log .entry:hover .what > .role-line { color: var(--teal); }
+  .log .caret { color: var(--ink-dim); display: inline-block; width: 12px; transition: transform 0.2s ease; }
+  .log .entry.open .caret { transform: rotate(90deg); color: var(--teal); }
+  .log .detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease;
+    color: var(--ink);
+    font-size: 12px;
+    line-height: 1.7;
+    padding-left: 14px;
+    border-left: 1px solid var(--line);
+    margin-left: 2px;
+  }
+  .log .detail-inner { padding: 8px 0 4px; color: var(--ink-dim); }
+  .log .entry.open .detail { max-height: var(--target-h, 200px); }
+  .log .empty {
+    color: var(--ink-dim);
+    font: 13px 'Fragment Mono', monospace;
+    padding: 4px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div id="brand"></div>
+  </header>
+
+  <div id="info">
+    <span class="row"><span class="k">&gt; whoami</span><span class="v">marshall johnson</span></span>
+    <span class="row"><span class="k">&gt; role</span><span class="v">engineer &amp; data scientist</span></span>
+    <span class="row"><span class="k">&gt; company</span><span class="v">waldium <span class="accent">(yc s23)</span></span></span>
+    <span class="row"><span class="k">&gt; location</span><span class="v">sf bay area</span></span>
+    <span class="row"><span class="k">&gt; links</span><span class="v"><a href="https://www.linkedin.com/in/datamarsh/">linkedin</a></span></span>
+  </div>
+
+  <section id="blog-section">
+    <h2>&gt; blog <span class="caret">›</span></h2>
+    <div class="body">
+      <div class="log">
+        <div class="empty">no posts yet — check back soon</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="exp-section">
+    <h2>&gt; experience <span class="caret">›</span></h2>
+    <div class="body">
+    <div class="log" id="experience">
+      <div class="entry">
+        <span class="when">2026 — now</span>
+        <span class="what">
+          <span class="role-line"><span class="caret">›</span> <span class="co">waldium</span> · founding engineer</span>
+          <span class="note">sf bay area · on-site</span>
+          <div class="detail"><div class="detail-inner">building the engineering foundation at a yc-backed startup. shipping ai agents that operate on real-world workflows from day one.</div></div>
+        </span>
+      </div>
+      <div class="entry">
+        <span class="when">2024 — now</span>
+        <span class="what">
+          <span class="role-line"><span class="caret">›</span> <span class="co">aitado</span> · co-founder</span>
+          <span class="note">specialized language models &amp; graph retrieval for education</span>
+          <div class="detail"><div class="detail-inner">co-founded an education-focused ai company building specialized language models and graph-based retrieval systems. self-employed; one and a half years in.</div></div>
+        </span>
+      </div>
+      <div class="entry">
+        <span class="when">2022 — 2025</span>
+        <span class="what">
+          <span class="role-line"><span class="caret">›</span> <span class="co">expedia group</span> · data scientist ii</span>
+          <span class="note">data science lead for ai checkout</span>
+          <div class="detail"><div class="detail-inner">led data science for the ai checkout effort. owned data science and the pipelines underneath it. austin, tx — two years and eight months.</div></div>
+        </span>
+      </div>
+      <div class="entry">
+        <span class="when">2021 — 2022</span>
+        <span class="what">
+          <span class="role-line"><span class="caret">›</span> <span class="co">lakeshore learning</span> · data analyst ii</span>
+          <span class="note">built the experimentation program from scratch</span>
+          <div class="detail"><div class="detail-inner">created lakeshore's experimentation program end-to-end, taking testing velocity from 3 experiments per year to over 80. los angeles.</div></div>
+        </span>
+      </div>
+      <div class="entry">
+        <span class="when">2020 — 2021</span>
+        <span class="what">
+          <span class="role-line"><span class="caret">›</span> <span class="co">centerfield</span> · product analyst</span>
+          <span class="note">analytics across 5 major properties</span>
+          <div class="detail"><div class="detail-inner">led end-to-end analytics — tracking through experimentation — for five centerfield sites including bandnow.com, security.org, and inmyarea.com.</div></div>
+        </span>
+      </div>
+    </div>
+    </div>
+  </section>
+</div>
+
+<script type="module">
+import { prepareWithSegments, prepare, layout } from 'https://esm.sh/@chenglou/pretext'
+
+const FONT = '12px "Fragment Mono", ui-monospace, monospace'
+const LINE_HEIGHT = 14
+
+const BANNER = [
+  ' __  __                _           _ _ ',
+  '|  \\/  | __ _ _ __ ___| |__   __ _| | |',
+  '| |\\/| |/ _` | \'__/ __| \'_ \\ / _` | | |',
+  '| |  | | (_| | |  \\__ \\ | | | (_| | | |',
+  '|_|  |_|\\__,_|_|  |___/_| |_|\\__,_|_|_|',
+]
+
+const brand = document.getElementById('brand')
+
+async function render() {
+  if (document.fonts && document.fonts.load) {
+    try { await document.fonts.load(FONT, 'M') } catch {}
+    try { await document.fonts.ready } catch {}
+  }
+
+  const prepared = prepareWithSegments('M', FONT)
+  const cellW = (prepared.widths && prepared.widths[0]) || 7.2
+
+  let maxCols = 0
+  for (let li = 0; li < BANNER.length; li++) {
+    const line = BANNER[li]
+    if (line.length > maxCols) maxCols = line.length
+    for (let ci = 0; ci < line.length; ci++) {
+      const ch = line[ci]
+      if (ch === ' ') continue
+      const el = document.createElement('span')
+      el.className = 'glyph'
+      el.textContent = ch
+      el.style.transform = `translate(${ci * cellW}px, ${li * LINE_HEIGHT}px)`
+      brand.appendChild(el)
+    }
+  }
+  brand.style.width = (maxCols * cellW) + 'px'
+  brand.style.height = (BANNER.length * LINE_HEIGHT) + 'px'
+}
+
+render()
+
+// --- experience dropdowns: pretext-measured heights ---
+const DETAIL_FONT = '12px "Fragment Mono", ui-monospace, monospace'
+const DETAIL_LINE_HEIGHT = 20.4 // 12px * 1.7
+
+function measureDetails() {
+  const entries = document.querySelectorAll('#experience .entry')
+  for (const entry of entries) {
+    const detail = entry.querySelector('.detail')
+    const inner = entry.querySelector('.detail-inner')
+    if (!detail || !inner) continue
+    const text = inner.textContent.trim()
+    const w = detail.clientWidth - 14
+    if (w <= 0) continue
+    const prepared = prepare(text, DETAIL_FONT)
+    const { height } = layout(prepared, w, DETAIL_LINE_HEIGHT)
+    detail.style.setProperty('--target-h', (height + 12) + 'px')
+  }
+}
+
+function measureSection() {
+  const section = document.getElementById('exp-section')
+  const log = document.getElementById('experience')
+  if (!section || !log) return
+  // Sum each entry's collapsed height + any open detail target.
+  let total = 0
+  for (const entry of log.querySelectorAll('.entry')) {
+    total += entry.getBoundingClientRect().height
+    if (entry.classList.contains('open')) {
+      const detail = entry.querySelector('.detail')
+      const targetH = parseFloat(getComputedStyle(detail).getPropertyValue('--target-h')) || 0
+      // entry height already includes 0 for the detail; add its target.
+      total += targetH
+    }
+  }
+  section.style.setProperty('--section-h', (total + 24) + 'px')
+}
+
+async function initExperience() {
+  if (document.fonts && document.fonts.load) {
+    try { await document.fonts.load(DETAIL_FONT, 'M') } catch {}
+    try { await document.fonts.ready } catch {}
+  }
+  // Blog section: simple toggle, closed by default.
+  const blog = document.getElementById('blog-section')
+  blog.style.setProperty('--section-h', '60px')
+  blog.querySelector('h2').addEventListener('click', () => blog.classList.toggle('open'))
+
+  // Experience section: temporarily open to measure, then close.
+  const section = document.getElementById('exp-section')
+  section.classList.add('open')
+  measureDetails()
+  measureSection()
+  // Disable transition for the initial close so it doesn't animate on load.
+  const body = section.querySelector('.body')
+  const prev = body.style.transition
+  body.style.transition = 'none'
+  section.classList.remove('open')
+  // Force reflow then restore transition.
+  void body.offsetHeight
+  body.style.transition = prev
+  window.addEventListener('resize', () => { measureDetails(); measureSection() })
+
+  document.querySelectorAll('#experience .entry').forEach(entry => {
+    entry.addEventListener('click', e => {
+      e.stopPropagation()
+      entry.classList.toggle('open')
+      measureSection()
+    })
+  })
+
+  section.querySelector('h2').addEventListener('click', () => {
+    section.classList.toggle('open')
+  })
+}
+initExperience()
+</script>
+</body>
+</html>
