@@ -24,6 +24,15 @@
   }
   .wrap { max-width: 720px; margin: 0 auto; padding: 48px 24px 120px; }
   header { border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 32px; }
+  #logo {
+    font-family: 'Fragment Mono', ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.15;
+    color: var(--orange);
+    margin: 0 0 18px;
+    white-space: pre;
+    letter-spacing: 0.05em;
+  }
   #brand {
     position: relative;
     color: var(--teal);
@@ -71,6 +80,13 @@
     transition: max-height 0.32s ease;
   }
   section.open .body { max-height: var(--section-h, 1000px); }
+  #blog-section h2 { cursor: default; }
+  #blog-section h2 a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  #blog-section h2 a:hover { color: var(--orange); }
   .log {
     font: 13px/1.9 'Fragment Mono', 'Geist Mono', monospace;
     color: var(--ink);
@@ -112,6 +128,9 @@
 
 <div class="wrap">
   <header>
+    <pre id="logo"> *
+  *
+   *</pre>
     <div id="brand"></div>
   </header>
 
@@ -124,12 +143,7 @@
   </div>
 
   <section id="blog-section">
-    <h2>&gt; blog <span class="caret">›</span></h2>
-    <div class="body">
-      <div class="log">
-        <div class="empty">no posts yet — check back soon</div>
-      </div>
-    </div>
+    <h2><a href="https://marsha-j8e.waldium.app/" target="_blank" rel="noopener">&gt; blog ↗</a></h2>
   </section>
 
   <section id="exp-section">
@@ -139,41 +153,36 @@
       <div class="entry">
         <span class="when">2026 — now</span>
         <span class="what">
-          <span class="role-line"><span class="caret">›</span> <span class="co">waldium</span> · founding engineer</span>
+          <span class="role-line"><span class="co">waldium</span> · founding engineer</span>
           <span class="note">sf bay area · on-site</span>
-          <div class="detail"><div class="detail-inner">building the engineering foundation at a yc-backed startup. shipping ai agents that operate on real-world workflows from day one.</div></div>
         </span>
       </div>
       <div class="entry">
         <span class="when">2024 — now</span>
         <span class="what">
-          <span class="role-line"><span class="caret">›</span> <span class="co">aitado</span> · co-founder</span>
+          <span class="role-line"><span class="co">aitado</span> · co-founder</span>
           <span class="note">specialized language models &amp; graph retrieval for education</span>
-          <div class="detail"><div class="detail-inner">co-founded an education-focused ai company building specialized language models and graph-based retrieval systems. self-employed; one and a half years in.</div></div>
         </span>
       </div>
       <div class="entry">
         <span class="when">2022 — 2025</span>
         <span class="what">
-          <span class="role-line"><span class="caret">›</span> <span class="co">expedia group</span> · data scientist ii</span>
+          <span class="role-line"><span class="co">expedia group</span> · data scientist ii</span>
           <span class="note">data science lead for ai checkout</span>
-          <div class="detail"><div class="detail-inner">led data science for the ai checkout effort. owned data science and the pipelines underneath it. austin, tx — two years and eight months.</div></div>
         </span>
       </div>
       <div class="entry">
         <span class="when">2021 — 2022</span>
         <span class="what">
-          <span class="role-line"><span class="caret">›</span> <span class="co">lakeshore learning</span> · data analyst ii</span>
+          <span class="role-line"><span class="co">lakeshore learning</span> · data analyst ii</span>
           <span class="note">built the experimentation program from scratch</span>
-          <div class="detail"><div class="detail-inner">created lakeshore's experimentation program end-to-end, taking testing velocity from 3 experiments per year to over 80. los angeles.</div></div>
         </span>
       </div>
       <div class="entry">
         <span class="when">2020 — 2021</span>
         <span class="what">
-          <span class="role-line"><span class="caret">›</span> <span class="co">centerfield</span> · product analyst</span>
+          <span class="role-line"><span class="co">centerfield</span> · product analyst</span>
           <span class="note">analytics across 5 major properties</span>
-          <div class="detail"><div class="detail-inner">led end-to-end analytics — tracking through experimentation — for five centerfield sites including bandnow.com, security.org, and inmyarea.com.</div></div>
         </span>
       </div>
     </div>
@@ -268,11 +277,6 @@ async function initExperience() {
     try { await document.fonts.load(DETAIL_FONT, 'M') } catch {}
     try { await document.fonts.ready } catch {}
   }
-  // Blog section: simple toggle, closed by default.
-  const blog = document.getElementById('blog-section')
-  blog.style.setProperty('--section-h', '60px')
-  blog.querySelector('h2').addEventListener('click', () => blog.classList.toggle('open'))
-
   // Experience section: temporarily open to measure, then close.
   const section = document.getElementById('exp-section')
   section.classList.add('open')
@@ -287,14 +291,6 @@ async function initExperience() {
   void body.offsetHeight
   body.style.transition = prev
   window.addEventListener('resize', () => { measureDetails(); measureSection() })
-
-  document.querySelectorAll('#experience .entry').forEach(entry => {
-    entry.addEventListener('click', e => {
-      e.stopPropagation()
-      entry.classList.toggle('open')
-      measureSection()
-    })
-  })
 
   section.querySelector('h2').addEventListener('click', () => {
     section.classList.toggle('open')
